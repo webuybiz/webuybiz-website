@@ -1,73 +1,101 @@
-<!doctype html>
-<html lang="en-AU"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>
-:root{--navy:#14263d;--gold:#c99a4a;--ink:#243142;--muted:#657184;--line:#e5e1d8}
-*{box-sizing:border-box}body{margin:0;padding:12px;background:#f7f5f0;color:var(--ink);font:15px/1.5 Arial,sans-serif}
-form{max-width:760px;margin:auto;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px}
-h2{margin:0;color:var(--navy);font-size:23px}p.help{color:var(--muted);margin:6px 0 18px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{margin:0 0 13px}.full{grid-column:1/-1}
-label{display:block;font-weight:700;font-size:13px;margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid #cfcabd;border-radius:7px;font:15px Arial;background:#fff;color:var(--ink)}
-textarea{min-height:86px;resize:vertical}.hint{font-size:12px;color:var(--muted);margin-top:4px}
-fieldset{border:0;padding:0;margin:18px 0 8px}legend{font-weight:800;color:var(--navy);margin-bottom:10px}
-.check{display:flex;gap:9px;align-items:flex-start;margin:12px 0;font-size:13px}.check input{width:auto;margin-top:3px}
-button{width:100%;border:0;border-radius:7px;background:var(--gold);color:var(--navy);font-weight:800;padding:14px;font-size:16px;cursor:pointer}
-#status{margin-top:12px;padding:10px;border-radius:7px;display:none}#status.ok{display:block;background:#e8f4ec;color:#205b37}#status.err{display:block;background:#faeaea;color:#8a2525}
-.hp{position:absolute;left:-10000px}
-@media(max-width:600px){.grid{grid-template-columns:1fr}form{padding:16px}}
-</style></head><body>
-<form id="leadForm">
-<h2>Private business enquiry</h2>
-<p class="help">A few broad details help us understand your business. You do not need to identify it publicly.</p>
-<div class="grid">
-<div class="field"><label for="firstName">First name *</label><input id="firstName" name="firstName" maxlength="80" required></div>
-<div class="field"><label for="email">Email *</label><input id="email" name="email" type="email" maxlength="150" required></div>
-<div class="field"><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" maxlength="40"></div>
-<div class="field"><label for="contactMethod">Preferred contact method</label><select id="contactMethod" name="contactMethod"><option>Email</option><option>Phone</option><option>Either</option></select></div>
-<div class="field"><label for="industry">Industry *</label><select id="industry" name="industry" required><option value="">Select an industry</option><option>Hospitality / food</option><option>Automotive</option><option>Wholesale / distribution</option><option>Trade services</option><option>Manufacturing</option><option>Cleaning / facilities</option><option>Retail</option><option>Professional services</option><option>Other</option></select></div>
-<div class="field"><label for="region">Business region (broad only)</label><input id="region" name="region" placeholder="e.g. Southern NSW, Sydney, regional NSW"></div>
-<div class="field"><label for="years">Years in operation</label><select id="years" name="years"><option value="">Select</option><option>Under 2 years</option><option>2–5 years</option><option>6–10 years</option><option>11–20 years</option><option>21–30 years</option><option>Over 30 years</option></select></div>
-<div class="field"><label for="employees">Approximate employees (including you)</label><select id="employees" name="employees"><option value="">Select</option><option>Owner only</option><option>2–4</option><option>5–9</option><option>10–19</option><option>20–49</option><option>50–99</option><option>100+</option></select></div>
-<div class="field"><label for="turnover">Approximate annual turnover (optional)</label><select id="turnover" name="turnover"><option value="">Prefer not to say</option><option>Under $250k</option><option>$250k–$500k</option><option>$500k–$1m</option><option>$1m–$2m</option><option>$2m–$5m</option><option>$5m–$10m</option><option>Over $10m</option></select></div>
-<div class="field"><label for="profitability">Trading position (optional)</label><select id="profitability" name="profitability"><option value="">Prefer not to say</option><option>Profitable</option><option>Break-even</option><option>Currently loss-making</option><option>Varies year to year</option><option>Not sure</option></select></div>
-<div class="field"><label for="ownerRole">How involved are you day-to-day?</label><select id="ownerRole" name="ownerRole"><option value="">Select</option><option>Full-time, hands-on</option><option>Part-time / oversight</option><option>Mostly manager-operated</option><option>Several owners share duties</option></select></div>
-<div class="field"><label for="reason">What has prompted you to consider a change?</label><select id="reason" name="reason"><option value="">Prefer not to say</option><option>Retirement</option><option>No family / internal successor</option><option>Owner fatigue / lifestyle change</option><option>Relocation or new opportunity</option><option>Partnership change</option><option>Want to realise value / diversify</option><option>Business needs a new owner to grow</option><option>Other / still exploring</option></select></div>
-<div class="field"><label for="timing">Possible timeframe</label><select id="timing" name="timing"><option value="">Not sure yet</option><option>Immediately / within 3 months</option><option>3–6 months</option><option>6–12 months</option><option>1–2 years</option><option>More than 2 years</option><option>Just exploring options</option></select></div>
-<div class="field"><label for="outcome">What would an ideal outcome look like?</label><select id="outcome" name="outcome"><option value="">Not sure yet</option><option>Full sale and exit</option><option>Gradual handover</option><option>Sell majority / retain some involvement</option><option>Bring in a new owner / partner</option><option>Open to discussing options</option></select></div>
-<div class="field full"><label for="context">Anything else? (optional)</label><textarea id="context" name="context" maxlength="1000" placeholder="Keep this high-level. Please do not include business name, exact address, customer or employee details, bank information or confidential documents."></textarea></div>
-</div>
-<div class="hp"><label>Leave this blank<input name="website" tabindex="-1" autocomplete="off"></label></div>
-<fieldset><legend>Privacy and contact</legend>
-<label class="check"><input type="checkbox" id="privacyAck" required><span>I have read the Privacy Notice and understand my information will be used to assess and respond to this enquiry. *</span></label>
-<label class="check"><input type="checkbox" id="marketingOptIn"><span>I would also like to receive occasional updates about business ownership and acquisition topics. (Optional; unticked by default.)</span></label>
-</fieldset>
-<p class="hint">Submitting this form is not an offer to sell, an offer to buy or a commitment by either party. Do not provide confidential documents at this stage.</p>
-<button id="submitBtn" type="submit">Send confidential enquiry</button><div id="status" role="status" aria-live="polite"></div>
-</form>
-<script>
-const form=document.getElementById('leadForm'), statusEl=document.getElementById('status'), btn=document.getElementById('submitBtn');
-form.addEventListener('submit',e=>{
- e.preventDefault();
- const data={};
- ['firstName','email','phone','contactMethod','industry','region','years','employees','turnover','profitability','ownerRole','reason','timing','outcome','context','website'].forEach(id=>{const el=form.elements[id];data[id]=el?el.value:''});
- data.privacyAck=document.getElementById('privacyAck').checked?'yes':'no';
- data.marketingOptIn=document.getElementById('marketingOptIn').checked?'yes':'no';
- btn.disabled=true;btn.textContent='Sending…';statusEl.className='';statusEl.style.display='none';
- google.script.run.withSuccessHandler(res=>{
-  form.reset();statusEl.textContent='Thank you. Your enquiry has been received. We will review it and contact you if there is a potential fit.';statusEl.className='ok';statusEl.style.display='block';btn.disabled=false;btn.textContent='Send confidential enquiry';
- }).withFailureHandler(err=>{
-  statusEl.textContent=(err&&err.message)?err.message:'Sorry, we could not submit your enquiry. Please try again.';statusEl.className='err';statusEl.style.display='block';btn.disabled=false;btn.textContent='Send confidential enquiry';
- }).submitEnquiry(data);
-});
-</script>
 
-<iframe
-  src="https://script.google.com/macros/s/AKfycbyRCPHcqfH132aifk56mAx2FBXsciqeSuNm22vMIqMvLbSbMEX4oLZ1wKUzlwIxnpWH/exec"
-  width="100%"
-  height="1500"
-  style="border:0; display:block;"
-  loading="lazy"
-  title="WeBuyBiz Private Business Enquiry Form">
-</iframe>
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Private Business Enquiry | WeBuyBiz Australia</title>
+  <meta name="description" content="Contact WeBuyBiz Australia about a confidential, direct business acquisition enquiry.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #f7f5f0;
+      color: #243142;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 28px;
+      background: #ffffff;
+      border: 1px solid #e5e1d8;
+      border-radius: 12px;
+    }
+
+    h1 {
+      color: #14263d;
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    p {
+      line-height: 1.6;
+      color: #657184;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      height: 1650px;
+      border: 0;
+      background: #f7f5f0;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        margin: 10px auto;
+        padding: 15px;
+      }
+
+      h1 {
+        font-size: 23px;
+      }
+
+      iframe {
+        height: 1900px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Private Business Enquiry</h1>
+
+    <p>
+      Considering selling or transitioning your business?
+      WeBuyBiz Australia welcomes confidential initial enquiries
+      from business owners interested in a direct acquisition.
+    </p>
+
+    <p>
+      Complete the form below. You do not need to identify
+      your business publicly at this stage.
+    </p>
+
+    <iframe
+      src="https://script.google.com/macros/s/AKfycbyRCPHcqfH132aifk56mAx2FBXsciqeSuNm22vMIqMvLbSbMEX4oLZ1wKUzlwIxnpWH/exec"
+      title="WeBuyBiz Private Business Enquiry Form"
+      loading="lazy">
+    </iframe>
+
+    <p>
+      Your enquiry is an initial expression of interest only.
+      It does not create an obligation for either party to proceed.
+    </p>
+  </div>
 
 </body>
 </html>
